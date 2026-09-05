@@ -1,9 +1,10 @@
 <!doctype html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>FRAME — Not a feed. A frame.</title>
+  <meta name="color-scheme" content="light dark" />
+  <title>FRAME — Não é um feed. É uma moldura.</title>
   <link rel="icon" type="image/svg+xml" href="favicon.svg" />
   <link rel="apple-touch-icon" href="favicon.svg" />
   <link rel="manifest" href="manifest.json" />
@@ -36,22 +37,31 @@
       --text-color: var(--ink-black);
       --card-bg: #FFFFFF;
       --border-color: var(--paper-sand);
+      --overlay-bg: rgba(251, 251, 249, 0.95);
+      color-scheme: light;
     }
 
     body.dark {
-      --paper-white: #121212;
-      --paper-bone: #1A1A1A;
-      --paper-sand: #2B2B2B;
-      --paper-surface: #1E1E1E;
-      --ink-black: #ECEAE4;
-      --ink-charcoal: #D8D6CE;
-      --ink-muted: #8E8C86;
-      --ink-faint: #5C5B56;
-      --ink-line: #2E2E2E;
-      --card-bg: #1B1B1B;
-      --border-color: #2B2B2B;
-      --shadow-photo: 0 4px 20px rgba(0, 0, 0, 0.4);
-      --shadow-photo-lift: 0 16px 36px rgba(0, 0, 0, 0.6);
+      /* Cinza azulado ("slate") em vez de preto puro */
+      --paper-white: #1B2029;
+      --paper-bone: #20262F;
+      --paper-sand: #333B48;
+      --paper-surface: #232A34;
+      --ink-black: #ECEEF2;
+      --ink-charcoal: #CDD3DC;
+      --ink-muted: #98A1AE;
+      --ink-faint: #6B7482;
+      --ink-line: #333B48;
+      --card-bg: #232A34;
+      --border-color: #333B48;
+      --overlay-bg: rgba(27, 32, 41, 0.92);
+      --shadow-photo: 0 4px 20px rgba(0, 0, 0, 0.35);
+      --shadow-photo-lift: 0 16px 36px rgba(0, 0, 0, 0.55);
+      /* Redeclarados de forma explícita para garantir que o fundo e o texto
+         da página realmente mudem junto com o restante do tema escuro */
+      --bg-color: var(--paper-white);
+      --text-color: var(--ink-black);
+      color-scheme: dark;
     }
 
     * {
@@ -62,6 +72,11 @@
       -moz-osx-font-smoothing: grayscale;
     }
 
+    html {
+      background-color: var(--bg-color);
+      min-height: 100%;
+    }
+
     body {
       background-color: var(--bg-color);
       color: var(--text-color);
@@ -69,8 +84,13 @@
       transition: background-color 0.3s ease, color 0.3s ease;
       overflow-x: hidden;
       min-height: 100vh;
+      min-height: 100dvh;
       display: flex;
       flex-direction: column;
+    }
+
+    main.app-main {
+      background-color: var(--bg-color);
     }
 
     .font-serif {
@@ -466,38 +486,38 @@
         <img src="favicon.svg" alt="FRAME Icon" style="width: 28px; height: 28px; border-radius: 6px; box-shadow: var(--shadow-photo);" />
         <div>
           <h1>FRAME</h1>
-          <p>Not a feed. A frame.</p>
+          <p>Não é um feed. É uma moldura.</p>
         </div>
       </button>
 
       <nav class="nav-links">
-        <button class="nav-btn active" id="tab-btn-today" onclick="switchTab('today')">TODAY</button>
-        <button class="nav-btn" id="tab-btn-collections" onclick="switchTab('collections')">COLLECTIONS</button>
-        <button class="nav-btn" id="tab-btn-boards" onclick="switchTab('boards')">BOARDS</button>
-        <button class="nav-btn" id="tab-btn-journal" onclick="switchTab('journal')">JOURNAL</button>
-        <button class="nav-btn" id="tab-btn-archive" onclick="switchTab('archive')">ARCHIVE</button>
-        <button class="nav-btn" id="tab-btn-printed" onclick="switchTab('printed')">PRINTED</button>
+        <button class="nav-btn active" id="tab-btn-today" onclick="switchTab('today')">HOJE</button>
+        <button class="nav-btn" id="tab-btn-collections" onclick="switchTab('collections')">COLEÇÕES</button>
+        <button class="nav-btn" id="tab-btn-boards" onclick="switchTab('boards')">PAINÉIS</button>
+        <button class="nav-btn" id="tab-btn-journal" onclick="switchTab('journal')">DIÁRIO</button>
+        <button class="nav-btn" id="tab-btn-archive" onclick="switchTab('archive')">ARQUIVO</button>
+        <button class="nav-btn" id="tab-btn-printed" onclick="switchTab('printed')">IMPRESSOS</button>
       </nav>
 
       <div class="nav-actions">
-        <button class="icon-btn" id="theme-toggle-btn" onclick="toggleTheme()" title="Toggle Darkroom Mode">
+        <button class="icon-btn" id="theme-toggle-btn" onclick="toggleTheme()" title="Alternar modo escuro">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
         </button>
         <button class="btn-add" onclick="openQuickAdd()">
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14m-7-7v14"/></svg>
-          <span>ADD</span>
+          <span>ADICIONAR</span>
         </button>
       </div>
     </div>
 
     <!-- Mobile Navigation Sub-bar -->
     <div class="mobile-tabs scrollbar-none">
-      <button class="nav-btn active" id="m-tab-today" onclick="switchTab('today')">TODAY</button>
-      <button class="nav-btn" id="m-tab-collections" onclick="switchTab('collections')">COLLECTIONS</button>
-      <button class="nav-btn" id="m-tab-boards" onclick="switchTab('boards')">BOARDS</button>
-      <button class="nav-btn" id="m-tab-journal" onclick="switchTab('journal')">JOURNAL</button>
-      <button class="nav-btn" id="m-tab-archive" onclick="switchTab('archive')">ARCHIVE</button>
-      <button class="nav-btn" id="m-tab-printed" onclick="switchTab('printed')">PRINTED</button>
+      <button class="nav-btn active" id="m-tab-today" onclick="switchTab('today')">HOJE</button>
+      <button class="nav-btn" id="m-tab-collections" onclick="switchTab('collections')">COLEÇÕES</button>
+      <button class="nav-btn" id="m-tab-boards" onclick="switchTab('boards')">PAINÉIS</button>
+      <button class="nav-btn" id="m-tab-journal" onclick="switchTab('journal')">DIÁRIO</button>
+      <button class="nav-btn" id="m-tab-archive" onclick="switchTab('archive')">ARQUIVO</button>
+      <button class="nav-btn" id="m-tab-printed" onclick="switchTab('printed')">IMPRESSOS</button>
     </div>
   </header>
 
@@ -521,7 +541,7 @@
   <!-- Footer -->
   <footer style="border-top: 1px solid var(--border-color); padding: 32px 16px; text-align: center; color: var(--ink-muted); margin-top: 40px;">
     <p class="font-serif" style="font-size: 15px; font-weight: 300; letter-spacing: 0.1em; color: var(--ink-charcoal);">FRAME</p>
-    <p style="font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase; margin-top: 4px; color: var(--ink-faint);">Not a feed. A frame. · Private photography sanctuary</p>
+    <p style="font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase; margin-top: 4px; color: var(--ink-faint);">Não é um feed. É uma moldura. · Santuário fotográfico privado</p>
   </footer>
 
   <!-- ==========================================================================
@@ -533,178 +553,178 @@
       {
         id: 'p-01',
         url: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1400&q=85',
-        title: 'Morning mist over Yosemite valley',
+        title: 'Névoa da manhã no vale de Yosemite',
         date: '2026-09-05',
         time: '06:48',
         location: 'Yosemite, California',
         aspect: '4/3',
         rotation: -1.4,
-        notes: 'The light filtered through the cedar pines in silence.',
+        notes: 'A luz filtrava-se em silêncio pelos cedros.',
         exif: { camera: 'Leica M6', lens: '35mm Summicron', aperture: 'f/4.0', shutter: '1/250s', iso: 400, film: 'Kodak Portra 400' }
       },
       {
         id: 'p-02',
         url: 'https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=900&q=85',
-        title: 'Shadow play on plaster wall',
+        title: 'Jogo de sombras na parede de reboco',
         date: '2026-09-05',
         time: '11:42',
         location: 'Minas Gerais, Brazil',
         aspect: '3/4',
         rotation: 1.8,
-        notes: 'Midday stillness. A breeze moving the linen curtain.',
+        notes: 'Quietude do meio-dia. Uma brisa movendo a cortina de linho.',
         exif: { camera: 'Contax T2', lens: '38mm Sonnar', aperture: 'f/5.6', shutter: '1/500s', iso: 200, film: 'Fujicolor C200' }
       },
       {
         id: 'p-03',
         url: 'https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?auto=format&fit=crop&w=1200&q=85',
-        title: 'Rain on bus window at dusk',
+        title: 'Chuva na janela do ônibus ao entardecer',
         date: '2026-09-05',
         time: '17:32',
         location: 'São Paulo, Brazil',
         aspect: '1/1',
         rotation: -0.8,
-        notes: 'Crossing the viaduct under sudden September rain.',
+        notes: 'Atravessando o viaduto sob uma chuva repentina de setembro.',
         exif: { camera: 'Nikon D70', lens: '50mm f/1.8D', aperture: 'f/1.8', shutter: '1/60s', iso: 800 }
       },
       {
         id: 'p-04',
         url: 'https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=1500&q=85',
-        title: 'Fog descending on the pine ridge',
+        title: 'Neblina descendo sobre a cordilheira de pinheiros',
         date: '2026-09-04',
         time: '08:15',
         location: 'Serra da Mantiqueira',
         aspect: '3/2',
         rotation: 0.9,
-        notes: 'Square format forces contemplation of the horizon.',
+        notes: 'O formato quadrado força a contemplação do horizonte.',
         exif: { camera: 'Hasselblad 500C/M', lens: '80mm Planar', aperture: 'f/8.0', shutter: '1/125s', iso: 100, film: 'Ilford FP4 Plus' }
       },
       {
         id: 'p-05',
         url: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=800&q=85',
-        title: 'Girl reading by cafe window',
+        title: 'Menina lendo perto da janela do café',
         date: '2026-09-04',
         time: '15:20',
         location: 'Lisbon, Portugal',
         aspect: '3/4',
         rotation: -2.2,
-        notes: 'The golden hour bouncing off tile façades.',
+        notes: 'A hora dourada refletindo nas fachadas de azulejo.',
         exif: { camera: 'Leica M6', lens: '50mm Summicron', aperture: 'f/2.0', shutter: '1/125s', iso: 400, film: 'Kodak Tri-X 400' }
       },
       {
         id: 'p-06',
         url: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1600&q=85',
-        title: 'Late afternoon tide washing over sandbar',
+        title: 'Maré do fim da tarde cobrindo o banco de areia',
         date: '2026-08-28',
         time: '18:05',
         location: 'Ubatuba, SP',
         aspect: '16/7',
         rotation: 1.1,
-        notes: 'Warm water, salt air, salt in hair.',
+        notes: 'Água morna, ar salgado, sal no cabelo.',
         exif: { camera: 'Fujifilm X100V', lens: '23mm f/2', aperture: 'f/4.0', shutter: '1/500s', iso: 160 }
       },
       {
         id: 'p-07',
         url: 'https://images.unsplash.com/photo-1499750310107-5fef28a66643?auto=format&fit=crop&w=1200&q=85',
-        title: 'Notebook, espresso cup and open fountain pen',
+        title: 'Caderno, xícara de café e caneta-tinteiro aberta',
         date: '2026-08-22',
         time: '10:04',
         location: 'Pinheiros, São Paulo',
         aspect: '3/2',
         rotation: -0.5,
-        notes: 'Writing down dreams before they dissolve into errands.',
+        notes: 'Anotando sonhos antes que se dissolvam em tarefas.',
         exif: { camera: 'Contax T2', lens: '38mm Sonnar', aperture: 'f/2.8', shutter: '1/125s', iso: 400, film: 'Kodak Portra 400' }
       },
       {
         id: 'p-08',
         url: 'https://images.unsplash.com/photo-1472214257432-dd7915ae3e93?auto=format&fit=crop&w=1200&q=85',
-        title: 'Lonely tree on rolling pasture',
+        title: 'Árvore solitária em pastagem ondulada',
         date: '2026-08-15',
         time: '16:50',
         location: 'Serra da Canastra',
         aspect: '3/4',
         rotation: 2.2,
-        notes: 'Pure solitary silence.',
+        notes: 'Pura solidão silenciosa.',
         exif: { camera: 'Hasselblad 500C/M', lens: '80mm Planar', aperture: 'f/11', shutter: '1/60s', iso: 100, film: 'Ilford Delta 100' }
       },
       {
         id: 'p-09',
         url: 'https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=1200&q=85',
-        title: 'Chair and afternoon dust motes',
+        title: 'Cadeira e partículas de poeira da tarde',
         date: '2026-08-10',
         time: '14:22',
         location: 'Atelier, Paris',
         aspect: '1/1',
         rotation: -1.5,
-        notes: 'Rooms have memories too.',
+        notes: 'Os cômodos também têm memórias.',
         exif: { camera: 'Leica M6', lens: '35mm Summicron', aperture: 'f/2.8', shutter: '1/60s', iso: 400, film: 'Ilford HP5 Plus' }
       },
       {
         id: 'p-10',
         url: 'https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?auto=format&fit=crop&w=1200&q=85',
-        title: 'Ferns in damp morning soil',
+        title: 'Samambaias em solo úmido de manhã',
         date: '2026-07-29',
         time: '07:30',
         location: 'Horto Florestal, SP',
         aspect: '3/4',
         rotation: 0.9,
-        notes: 'Macro texture of eucalyptus bark and wet moss.',
+        notes: 'Textura macro da casca de eucalipto e musgo molhado.',
         exif: { camera: 'Nikon D70', lens: '60mm Micro', aperture: 'f/3.5', shutter: '1/160s', iso: 400 }
       },
       {
         id: 'p-11',
         url: 'https://images.unsplash.com/photo-1502082553048-f009c37129b9?auto=format&fit=crop&w=1300&q=85',
-        title: 'Woodland clearing with sunbeams',
+        title: 'Clareira na floresta com raios de sol',
         date: '2026-07-14',
         time: '09:12',
         location: 'Kyoto, Japan',
         aspect: '3/2',
         rotation: -1.1,
-        notes: 'Komorebi — sunlight filtering through trees.',
+        notes: 'Komorebi — luz do sol filtrando através das árvores.',
         exif: { camera: 'Fujifilm X100V', lens: '23mm f/2', aperture: 'f/5.6', shutter: '1/320s', iso: 200 }
       },
       {
         id: 'p-12',
         url: 'https://images.unsplash.com/photo-1514565131-fce0801e5785?auto=format&fit=crop&w=1200&q=85',
-        title: 'Neon reflection on asphalt wet pavement',
+        title: 'Reflexo de neon no asfalto molhado',
         date: '2026-06-30',
         time: '23:14',
         location: 'Liberdade, São Paulo',
         aspect: '3/2',
         rotation: 1.6,
-        notes: 'Quiet midnight ramen shop closing up.',
+        notes: 'Uma tranquila loja de ramen fechando à meia-noite.',
         exif: { camera: 'Nikon D70', lens: '50mm f/1.8D', aperture: 'f/1.8', shutter: '1/45s', iso: 1600 }
       }
     ];
 
     const COLLECTIONS = [
-      { id: 'col-summer', title: 'summer', count: 18, dates: '03.01.26 — 18.01.26', coverPhotoId: 'p-06', desc: 'Coastal warmth, salt air, and slow afternoon tides.', daysAgo: 214 },
-      { id: 'col-things', title: 'things I liked', count: 42, coverPhotoId: 'p-07', desc: 'Everyday objects, textures, and unhurried details.' },
-      { id: 'col-nikon', title: 'Nikon D70', count: 84, coverPhotoId: 'p-03', desc: 'Early CCD sensor charm from 2004.' },
-      { id: 'col-sp', title: 'São Paulo', count: 126, dates: '12.02.26 — 05.09.26', coverPhotoId: 'p-03', desc: 'Brutalist concrete and sudden showers.' },
-      { id: 'col-quiet', title: 'quiet moments', count: 37, coverPhotoId: 'p-01', desc: 'Spaces that exist without performance.' },
-      { id: 'col-night', title: 'night walks', count: 29, coverPhotoId: 'p-12', desc: 'Ambient street lamps and deserted avenues.' },
-      { id: 'col-random', title: 'random days', count: 37, coverPhotoId: 'p-02', desc: 'Uncategorized fragments of light.' }
+      { id: 'col-summer', title: 'verão', count: 18, dates: '03.01.26 — 18.01.26', coverPhotoId: 'p-06', desc: 'Calor costeiro, ar salgado e marés lentas da tarde.', daysAgo: 214 },
+      { id: 'col-things', title: 'coisas que gostei', count: 42, coverPhotoId: 'p-07', desc: 'Objetos do dia a dia, texturas e detalhes sem pressa.' },
+      { id: 'col-nikon', title: 'Nikon D70', count: 84, coverPhotoId: 'p-03', desc: 'O charme do sensor CCD de 2004.' },
+      { id: 'col-sp', title: 'São Paulo', count: 126, dates: '12.02.26 — 05.09.26', coverPhotoId: 'p-03', desc: 'Concreto brutalista e chuvas repentinas.' },
+      { id: 'col-quiet', title: 'momentos quietos', count: 37, coverPhotoId: 'p-01', desc: 'Espaços que existem sem performance.' },
+      { id: 'col-night', title: 'caminhadas noturnas', count: 29, coverPhotoId: 'p-12', desc: 'Postes de luz ambiente e avenidas desertas.' },
+      { id: 'col-random', title: 'dias aleatórios', count: 37, coverPhotoId: 'p-02', desc: 'Fragmentos de luz sem categoria.' }
     ];
 
     let BOARDS = [
       {
         id: 'b-01',
-        title: 'Minas & Stillness',
+        title: 'Minas & Quietude',
         snapping: false,
         elements: [
           { id: 'be-1', type: 'photo', photoId: 'p-02', x: 18, y: 12, width: 260, rotation: -1.8, locked: true, zIndex: 2 },
-          { id: 'be-2', type: 'note', content: '05.09.26\n17:32\n35mm · f/1.8\nMinas Gerais\nquiet', x: 50, y: 16, width: 220, rotation: 1.2, locked: false, zIndex: 3 },
+          { id: 'be-2', type: 'note', content: '05.09.26\n17:32\n35mm · f/1.8\nMinas Gerais\nquieto', x: 50, y: 16, width: 220, rotation: 1.2, locked: false, zIndex: 3 },
           { id: 'be-3', type: 'photo', photoId: 'p-04', x: 42, y: 44, width: 320, rotation: 1.1, locked: false, zIndex: 1 },
-          { id: 'be-4', type: 'text', content: 'FRIDAY\n17:32\nsomewhere in Brazil', x: 18, y: 56, width: 200, rotation: -0.5, locked: false, zIndex: 4 },
+          { id: 'be-4', type: 'text', content: 'SEXTA-FEIRA\n17:32\nem algum lugar do Brasil', x: 18, y: 56, width: 200, rotation: -0.5, locked: false, zIndex: 4 },
           { id: 'be-5', type: 'photo', photoId: 'p-08', x: 62, y: 58, width: 240, rotation: -1.4, locked: false, zIndex: 2 }
         ]
       }
     ];
 
     const PRINTED_BOOKS = [
-      { id: 'pb-1', title: 'SUMMER 2025', pages: 24, year: '2025', coverUrl: PHOTOS[5].url, format: 'Clothbound Hardcover, 21 × 28 cm', desc: 'Printed on 200gsm archival matte cotton paper.' },
-      { id: 'pb-2', title: 'TOKYO', pages: 36, year: '2024', coverUrl: PHOTOS[10].url, format: 'Japanese Stitch Bound, 18 × 24 cm', desc: 'Printed on bamboo fine art paper with slipcase.' },
-      { id: 'pb-3', title: 'MINAS GERAIS', pages: 48, year: '2023', coverUrl: PHOTOS[1].url, format: 'Quarter Bound Leather & Linen, 24 × 30 cm', desc: 'Medium format black and white prints compiled over three seasons.' }
+      { id: 'pb-1', title: 'VERÃO 2025', pages: 24, year: '2025', coverUrl: PHOTOS[5].url, format: 'Capa dura em tecido, 21 × 28 cm', desc: 'Impresso em papel de algodão fosco arquivístico de 200g.' },
+      { id: 'pb-2', title: 'TOKYO', pages: 36, year: '2024', coverUrl: PHOTOS[10].url, format: 'Encadernação japonesa costurada, 18 × 24 cm', desc: 'Impresso em papel de arte de bambu, com estojo.' },
+      { id: 'pb-3', title: 'MINAS GERAIS', pages: 48, year: '2023', coverUrl: PHOTOS[1].url, format: 'Encadernação em quarto de couro e linho, 24 × 30 cm', desc: 'Fotografias em preto e branco de médio formato, reunidas ao longo de três estações.' }
     ];
 
     /* Application State */
@@ -737,7 +757,7 @@
       } else {
         iconBtn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>`;
       }
-      showToast(isDarkroom ? 'Darkroom mode enabled' : 'Paper mode enabled');
+      showToast(isDarkroom ? 'Modo escuro ativado' : 'Modo claro ativado');
     }
 
     /* Tab Switcher */
@@ -772,9 +792,9 @@
         <div style="max-width: 1040px; margin: 0 auto; padding: 48px 24px;">
           <!-- Editorial Header -->
           <div style="text-align: center; margin-bottom: 64px;">
-            <p style="font-size: 11px; letter-spacing: 0.3em; color: var(--ink-muted); text-transform: uppercase;">TODAY</p>
-            <h2 class="font-serif" style="font-size: 42px; font-weight: 300; margin-top: 8px;">Saturday</h2>
-            <p class="font-serif" style="font-size: 20px; font-style: italic; color: var(--ink-charcoal);">05 September 2026</p>
+            <p style="font-size: 11px; letter-spacing: 0.3em; color: var(--ink-muted); text-transform: uppercase;">HOJE</p>
+            <h2 class="font-serif" style="font-size: 42px; font-weight: 300; margin-top: 8px;">Sábado</h2>
+            <p class="font-serif" style="font-size: 20px; font-style: italic; color: var(--ink-charcoal);">05 de setembro de 2026</p>
             <div style="width: 48px; height: 1px; background: var(--border-color); margin: 24px auto 0;"></div>
           </div>
 
@@ -810,8 +830,8 @@
               </div>
 
               <div class="note-slip" style="transform: rotate(-2.2deg);">
-                <span class="font-mono" style="font-size: 10px; color: var(--ink-muted); display: block; margin-bottom: 8px;">11:42 · PERSONAL RECORD</span>
-                <p>${p2.notes}\n\n38mm · f/5.6\nquiet midday breeze</p>
+                <span class="font-mono" style="font-size: 10px; color: var(--ink-muted); display: block; margin-bottom: 8px;">11:42 · REGISTRO PESSOAL</span>
+                <p>${p2.notes}\n\n38mm · f/5.6\nbrisa quieta do meio-dia</p>
               </div>
             </div>
 
@@ -829,11 +849,11 @@
 
             <!-- On This Day Discovery (Rule 19) -->
             <div style="border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color); padding: 48px 16px; text-align: center; margin: 40px 0;">
-              <span style="font-size: 10px; letter-spacing: 0.25em; color: var(--ink-faint); text-transform: uppercase;">ON THIS DAY · 5 YEARS AGO</span>
-              <h3 class="font-serif" style="font-size: 28px; font-weight: 300; margin-top: 6px;">September 2021</h3>
-              <p class="font-serif" style="font-style: italic; font-size: 14px; color: var(--ink-muted); margin-top: 4px;">8 photographs discovered in your private archive.</p>
+              <span style="font-size: 10px; letter-spacing: 0.25em; color: var(--ink-faint); text-transform: uppercase;">NESTE DIA · HÁ 5 ANOS</span>
+              <h3 class="font-serif" style="font-size: 28px; font-weight: 300; margin-top: 6px;">Setembro de 2021</h3>
+              <p class="font-serif" style="font-style: italic; font-size: 14px; color: var(--ink-muted); margin-top: 4px;">8 fotografias descobertas no seu arquivo privado.</p>
               <button onclick="switchTab('archive')" style="margin-top: 20px; background: none; border: 1px solid var(--border-color); padding: 8px 18px; font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; cursor: pointer; color: var(--ink-charcoal);">
-                OPEN ARCHIVE
+                ABRIR ARQUIVO
               </button>
             </div>
 
@@ -854,9 +874,9 @@
       let html = `
         <div style="max-width: 1140px; margin: 0 auto; padding: 48px 24px;">
           <div style="text-align: center; margin-bottom: 48px;">
-            <p style="font-size: 11px; letter-spacing: 0.3em; color: var(--ink-muted); text-transform: uppercase;">ARCHIVAL SHELF</p>
-            <h2 class="font-serif" style="font-size: 38px; font-weight: 300; margin-top: 6px;">Collections</h2>
-            <p class="font-serif" style="font-style: italic; font-size: 14px; color: var(--ink-muted); margin-top: 4px;">Quiet containers for moments, places, and cameras.</p>
+            <p style="font-size: 11px; letter-spacing: 0.3em; color: var(--ink-muted); text-transform: uppercase;">PRATELEIRA DO ARQUIVO</p>
+            <h2 class="font-serif" style="font-size: 38px; font-weight: 300; margin-top: 6px;">Coleções</h2>
+            <p class="font-serif" style="font-style: italic; font-size: 14px; color: var(--ink-muted); margin-top: 4px;">Recipientes silenciosos para momentos, lugares e câmeras.</p>
           </div>
       `;
 
@@ -865,11 +885,11 @@
           <!-- Revisit Banner (Rule 20) -->
           <div style="border: 1px solid var(--border-color); background: var(--paper-surface); padding: 24px 32px; margin-bottom: 48px; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 16px;">
             <div>
-              <span class="font-mono" style="font-size: 10px; letter-spacing: 0.2em; color: var(--ink-muted); text-transform: uppercase;">REVISIT · PERSONAL DISCOVERY</span>
-              <h4 class="font-serif" style="font-size: 20px; font-weight: 300; margin-top: 4px;">You haven't opened this in ${revisit.daysAgo} days.</h4>
+              <span class="font-mono" style="font-size: 10px; letter-spacing: 0.2em; color: var(--ink-muted); text-transform: uppercase;">REVISITAR · DESCOBERTA PESSOAL</span>
+              <h4 class="font-serif" style="font-size: 20px; font-weight: 300; margin-top: 4px;">Você não abre isso há ${revisit.daysAgo} dias.</h4>
               <p class="font-serif" style="font-style: italic; font-size: 13px; color: var(--ink-muted); margin-top: 2px;">${revisit.title} · ${revisit.count} photographs</p>
             </div>
-            <button onclick="openCollection('${revisit.id}')" class="btn-add">REVISIT</button>
+            <button onclick="openCollection('${revisit.id}')" class="btn-add">REVISITAR</button>
           </div>
         `;
       }
@@ -886,7 +906,7 @@
             <div style="margin-top: 14px;">
               <h3 class="font-serif" style="font-size: 18px; font-weight: 400; text-transform: lowercase;">${c.title}</h3>
               <p style="font-size: 12px; color: var(--ink-muted); margin-top: 3px;">
-                ${c.count} photographs ${c.dates ? `· <span class="font-mono" style="font-size: 11px;">${c.dates}</span>` : ''}
+                ${c.count} fotografias ${c.dates ? `· <span class="font-mono" style="font-size: 11px;">${c.dates}</span>` : ''}
               </p>
             </div>
           </div>
@@ -910,18 +930,18 @@
         <div style="max-width: 1140px; margin: 0 auto; padding: 36px 24px;">
           <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px;">
             <button onclick="selectedCollectionId=null; renderCurrentView();" style="background: none; border: none; font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink-muted); cursor: pointer;">
-              ← COLLECTIONS
+              ← COLEÇÕES
             </button>
             <div style="display: flex; gap: 4px; border: 1px solid var(--border-color); padding: 3px; background: var(--card-bg);">
               <button onclick="setCollectionMode('editorial')" style="padding: 4px 10px; font-size: 11px; border: none; cursor: pointer; ${collectionInnerMode==='editorial'?'background:var(--ink-black); color:var(--paper-white);':'background:none; color:var(--ink-muted);'}">EDITORIAL</button>
-              <button onclick="setCollectionMode('grid')" style="padding: 4px 10px; font-size: 11px; border: none; cursor: pointer; ${collectionInnerMode==='grid'?'background:var(--ink-black); color:var(--paper-white);':'background:none; color:var(--ink-muted);'}">GRID</button>
-              <button onclick="setCollectionMode('film')" style="padding: 4px 10px; font-size: 11px; border: none; cursor: pointer; ${collectionInnerMode==='film'?'background:var(--ink-black); color:var(--paper-white);':'background:none; color:var(--ink-muted);'}">FILM</button>
+              <button onclick="setCollectionMode('grid')" style="padding: 4px 10px; font-size: 11px; border: none; cursor: pointer; ${collectionInnerMode==='grid'?'background:var(--ink-black); color:var(--paper-white);':'background:none; color:var(--ink-muted);'}">GRADE</button>
+              <button onclick="setCollectionMode('film')" style="padding: 4px 10px; font-size: 11px; border: none; cursor: pointer; ${collectionInnerMode==='film'?'background:var(--ink-black); color:var(--paper-white);':'background:none; color:var(--ink-muted);'}">FILME</button>
             </div>
           </div>
 
           <div style="text-align: center; margin-bottom: 56px;">
             <h2 class="font-serif" style="font-size: 42px; font-weight: 300; text-transform: uppercase;">${col.title}</h2>
-            <p style="font-size: 12px; color: var(--ink-muted); margin-top: 6px;">${col.count} photographs ${col.dates ? `· ${col.dates}` : ''}</p>
+            <p style="font-size: 12px; color: var(--ink-muted); margin-top: 6px;">${col.count} fotografias ${col.dates ? `· ${col.dates}` : ''}</p>
             <p class="font-serif" style="font-style: italic; font-size: 14px; color: var(--ink-charcoal); margin-top: 6px;">"${col.desc}"</p>
           </div>
       `;
@@ -989,15 +1009,15 @@
           <div style="border-bottom: 1px solid var(--border-color); padding: 12px 24px; display: flex; justify-content: space-between; align-items: center; background: var(--bg-color);">
             <div>
               <h2 class="font-serif" style="font-size: 20px; font-weight: 400;">${board.title}</h2>
-              <span class="font-mono" style="font-size: 10px; color: var(--ink-muted);">${board.elements.length} elements · ${board.elements.filter(e=>e.locked).length} locked</span>
+              <span class="font-mono" style="font-size: 10px; color: var(--ink-muted);">${board.elements.length} elementos · ${board.elements.filter(e=>e.locked).length} bloqueados</span>
             </div>
 
             <div style="display: flex; gap: 8px; align-items: center;">
-              <button onclick="addPhotoToBoard()" style="border: 1px solid var(--border-color); background: none; padding: 5px 12px; font-size: 11px; cursor: pointer; color: var(--ink-charcoal);">+ PHOTO</button>
-              <button onclick="addNoteToBoard()" style="border: 1px solid var(--border-color); background: none; padding: 5px 12px; font-size: 11px; cursor: pointer; color: var(--ink-charcoal);">+ NOTE</button>
-              <button onclick="toggleAllLocks()" style="border: 1px solid var(--border-color); background: none; padding: 5px 10px; font-size: 11px; cursor: pointer; color: var(--ink-muted);" title="Toggle Lock All">🔒</button>
-              <button onclick="openMixModal()" class="btn-add" style="background: var(--paper-surface); color: var(--ink-black); border: 1px solid var(--border-color);">🎲 MIX</button>
-              <button onclick="openShareModal()" class="btn-add">SHARE IMAGE</button>
+              <button onclick="addPhotoToBoard()" style="border: 1px solid var(--border-color); background: none; padding: 5px 12px; font-size: 11px; cursor: pointer; color: var(--ink-charcoal);">+ FOTO</button>
+              <button onclick="addNoteToBoard()" style="border: 1px solid var(--border-color); background: none; padding: 5px 12px; font-size: 11px; cursor: pointer; color: var(--ink-charcoal);">+ NOTA</button>
+              <button onclick="toggleAllLocks()" style="border: 1px solid var(--border-color); background: none; padding: 5px 10px; font-size: 11px; cursor: pointer; color: var(--ink-muted);" title="Alternar bloqueio de todos">🔒</button>
+              <button onclick="openMixModal()" class="btn-add" style="background: var(--paper-surface); color: var(--ink-black); border: 1px solid var(--border-color);">🎲 MISTURAR</button>
+              <button onclick="openShareModal()" class="btn-add">COMPARTILHAR IMAGEM</button>
             </div>
           </div>
 
@@ -1020,9 +1040,9 @@
         if (isSelected) {
           html += `
             <div class="board-controls-floating">
-              <button onclick="toggleElementLock(event, '${el.id}')">${el.locked ? '🔒 Locked' : '🔓 Unlock'}</button>
-              <button onclick="rotateElement(event, '${el.id}')">↻ Rotate</button>
-              <button onclick="duplicateElement(event, '${el.id}')">⧉ Copy</button>
+              <button onclick="toggleElementLock(event, '${el.id}')">${el.locked ? '🔒 Bloqueado' : '🔓 Desbloquear'}</button>
+              <button onclick="rotateElement(event, '${el.id}')">↻ Girar</button>
+              <button onclick="duplicateElement(event, '${el.id}')">⧉ Copiar</button>
               <button onclick="removeElement(event, '${el.id}')" style="color: var(--accent-red);">✕</button>
             </div>
           `;
@@ -1160,14 +1180,14 @@
         zIndex: selectedBoard.elements.length + 1
       });
       renderCurrentView();
-      showToast('Photo added to canvas');
+      showToast('Foto adicionada à tela');
     }
 
     function addNoteToBoard() {
       selectedBoard.elements.push({
         id: `be-${Date.now()}`,
         type: 'note',
-        content: 'A quiet fragment\nwritten on warm paper.',
+        content: 'Um fragmento silencioso\nescrito em papel quente.',
         x: 40,
         y: 40,
         width: 200,
@@ -1176,14 +1196,14 @@
         zIndex: selectedBoard.elements.length + 1
       });
       renderCurrentView();
-      showToast('Note added to canvas');
+      showToast('Nota adicionada à tela');
     }
 
     function toggleAllLocks() {
       const allLocked = selectedBoard.elements.every(e => e.locked);
       selectedBoard.elements.forEach(e => e.locked = !allLocked);
       renderCurrentView();
-      showToast(!allLocked ? 'All elements locked' : 'All elements unlocked');
+      showToast(!allLocked ? 'Todos os elementos bloqueados' : 'Todos os elementos desbloqueados');
     }
 
     /* Mix Generative Algorithm (Rules 13 & 14: respects locked elements) */
@@ -1205,7 +1225,7 @@
       });
 
       renderCurrentView();
-      showToast(`Mix applied: ${preset}`);
+      showToast(`Mistura aplicada: ${preset}`);
     }
 
     function openMixModal() {
@@ -1215,19 +1235,19 @@
       container.innerHTML = `
         <div class="modal-box" style="padding: 24px; max-width: 420px;">
           <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-            <h3 class="font-serif" style="font-size: 20px;">MIX ENGINE</h3>
+            <h3 class="font-serif" style="font-size: 20px;">MOTOR DE MISTURA</h3>
             <button onclick="closeModals()" style="background: none; border: none; font-size: 16px; cursor: pointer;">✕</button>
           </div>
-          <p style="font-size: 11px; letter-spacing: 0.1em; color: var(--ink-muted); text-transform: uppercase; margin-bottom: 12px;">PRESETS</p>
+          <p style="font-size: 11px; letter-spacing: 0.1em; color: var(--ink-muted); text-transform: uppercase; margin-bottom: 12px;">PREDEFINIÇÕES</p>
           <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 24px;">
-            <button onclick="runMix('CALM'); closeModals();" class="nav-btn" style="border: 1px solid var(--border-color); padding: 8px;">CALM</button>
+            <button onclick="runMix('CALMA'); closeModals();" class="nav-btn" style="border: 1px solid var(--border-color); padding: 8px;">CALMA</button>
             <button onclick="runMix('EDITORIAL'); closeModals();" class="nav-btn" style="border: 1px solid var(--border-color); padding: 8px;">EDITORIAL</button>
-            <button onclick="runMix('WALL'); closeModals();" class="nav-btn" style="border: 1px solid var(--border-color); padding: 8px;">WALL</button>
-            <button onclick="runMix('CONTACT'); closeModals();" class="nav-btn" style="border: 1px solid var(--border-color); padding: 8px;">CONTACT</button>
-            <button onclick="runMix('MESSY'); closeModals();" class="nav-btn" style="border: 1px solid var(--border-color); padding: 8px;">MESSY</button>
+            <button onclick="runMix('PAREDE'); closeModals();" class="nav-btn" style="border: 1px solid var(--border-color); padding: 8px;">PAREDE</button>
+            <button onclick="runMix('CONTATO'); closeModals();" class="nav-btn" style="border: 1px solid var(--border-color); padding: 8px;">CONTATO</button>
+            <button onclick="runMix('BAGUNÇADO'); closeModals();" class="nav-btn" style="border: 1px solid var(--border-color); padding: 8px;">BAGUNÇADO</button>
             <button onclick="runMix('POLAROID'); closeModals();" class="nav-btn" style="border: 1px solid var(--border-color); padding: 8px;">POLAROID</button>
           </div>
-          <p class="font-serif" style="font-style: italic; font-size: 12px; color: var(--ink-faint); text-align: center;">Locked elements remain firmly anchored in place.</p>
+          <p class="font-serif" style="font-style: italic; font-size: 12px; color: var(--ink-faint); text-align: center;">Elementos bloqueados permanecem firmemente ancorados no lugar.</p>
         </div>
       `;
     }
@@ -1237,22 +1257,22 @@
       container.innerHTML = `
         <div style="max-width: 900px; margin: 0 auto; padding: 48px 24px;">
           <div style="text-align: center; margin-bottom: 64px;">
-            <p style="font-size: 11px; letter-spacing: 0.3em; color: var(--ink-muted); text-transform: uppercase;">VISUAL DIARY</p>
-            <h2 class="font-serif" style="font-size: 38px; font-weight: 300; margin-top: 6px;">Journal</h2>
-            <p class="font-serif" style="font-style: italic; font-size: 14px; color: var(--ink-muted); margin-top: 4px;">Photographs, times, and personal records assembled day by day.</p>
+            <p style="font-size: 11px; letter-spacing: 0.3em; color: var(--ink-muted); text-transform: uppercase;">DIÁRIO VISUAL</p>
+            <h2 class="font-serif" style="font-size: 38px; font-weight: 300; margin-top: 6px;">Diário</h2>
+            <p class="font-serif" style="font-style: italic; font-size: 14px; color: var(--ink-muted); margin-top: 4px;">Fotografias, horários e registros pessoais reunidos dia após dia.</p>
           </div>
 
           <!-- Day 1 -->
           <article style="border-bottom: 1px solid var(--border-color); padding-bottom: 64px; margin-bottom: 64px;">
             <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 24px;">
               <div>
-                <span class="font-mono" style="font-size: 11px; color: var(--ink-muted); letter-spacing: 0.15em; text-transform: uppercase;">SATURDAY</span>
-                <h3 class="font-serif" style="font-size: 30px; font-weight: 300;">05 SEPTEMBER 2026</h3>
+                <span class="font-mono" style="font-size: 11px; color: var(--ink-muted); letter-spacing: 0.15em; text-transform: uppercase;">SÁBADO</span>
+                <h3 class="font-serif" style="font-size: 30px; font-weight: 300;">05 DE SETEMBRO DE 2026</h3>
               </div>
-              <span class="font-mono" style="font-size: 11px; color: var(--ink-faint);">14 PHOTOGRAPHS</span>
+              <span class="font-mono" style="font-size: 11px; color: var(--ink-faint);">14 FOTOGRAFIAS</span>
             </div>
             <p class="font-serif" style="font-style: italic; font-size: 16px; color: var(--ink-charcoal); line-height: 1.8; margin-bottom: 40px; max-width: 650px;">
-              "Woke before dawn to witness how the morning light reshaped the room. No rush, no calendar obligations."
+              "Acordei antes do amanhecer para testemunhar como a luz da manhã remodelava o quarto. Sem pressa, sem compromissos na agenda."
             </p>
 
             <div style="display: flex; flex-direction: column; gap: 48px;">
@@ -1274,7 +1294,7 @@
                 </div>
                 <div>
                   <span class="font-mono" style="font-size: 11px; color: var(--ink-muted);">11:42 · Ouro Preto</span>
-                  <p class="font-serif" style="font-style: italic; font-size: 14px; margin-top: 6px;">The shadow of the lime tree traced an arc across the whitewashed facade.</p>
+                  <p class="font-serif" style="font-style: italic; font-size: 14px; margin-top: 6px;">A sombra da limeira traçava um arco pela fachada caiada.</p>
                 </div>
               </div>
             </div>
@@ -1289,15 +1309,15 @@
         <div style="max-width: 1200px; margin: 0 auto; padding: 48px 24px;">
           <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 16px; margin-bottom: 40px; border-bottom: 1px solid var(--border-color); padding-bottom: 24px;">
             <div>
-              <p style="font-size: 10px; letter-spacing: 0.25em; color: var(--ink-muted); text-transform: uppercase;">MASTER CATALOG</p>
-              <h2 class="font-serif" style="font-size: 32px; font-weight: 300; margin-top: 4px;">Archive</h2>
+              <p style="font-size: 10px; letter-spacing: 0.25em; color: var(--ink-muted); text-transform: uppercase;">CATÁLOGO MESTRE</p>
+              <h2 class="font-serif" style="font-size: 32px; font-weight: 300; margin-top: 4px;">Arquivo</h2>
             </div>
             <div style="display: flex; gap: 4px; border: 1px solid var(--border-color); padding: 3px; background: var(--card-bg);">
-              <button onclick="setArchiveMode('contact-sheet')" style="padding: 5px 10px; font-size: 11px; border: none; cursor: pointer; ${archiveMode==='contact-sheet'?'background:var(--ink-black); color:var(--paper-white);':'background:none; color:var(--ink-muted);'}">CONTACT</button>
-              <button onclick="setArchiveMode('timeline')" style="padding: 5px 10px; font-size: 11px; border: none; cursor: pointer; ${archiveMode==='timeline'?'background:var(--ink-black); color:var(--paper-white);':'background:none; color:var(--ink-muted);'}">TIMELINE</button>
+              <button onclick="setArchiveMode('contact-sheet')" style="padding: 5px 10px; font-size: 11px; border: none; cursor: pointer; ${archiveMode==='contact-sheet'?'background:var(--ink-black); color:var(--paper-white);':'background:none; color:var(--ink-muted);'}">CONTATO</button>
+              <button onclick="setArchiveMode('timeline')" style="padding: 5px 10px; font-size: 11px; border: none; cursor: pointer; ${archiveMode==='timeline'?'background:var(--ink-black); color:var(--paper-white);':'background:none; color:var(--ink-muted);'}">LINHA DO TEMPO</button>
               <button onclick="setArchiveMode('editorial')" style="padding: 5px 10px; font-size: 11px; border: none; cursor: pointer; ${archiveMode==='editorial'?'background:var(--ink-black); color:var(--paper-white);':'background:none; color:var(--ink-muted);'}">EDITORIAL</button>
-              <button onclick="setArchiveMode('film')" style="padding: 5px 10px; font-size: 11px; border: none; cursor: pointer; ${archiveMode==='film'?'background:var(--ink-black); color:var(--paper-white);':'background:none; color:var(--ink-muted);'}">FILM</button>
-              <button onclick="setArchiveMode('grid')" style="padding: 5px 10px; font-size: 11px; border: none; cursor: pointer; ${archiveMode==='grid'?'background:var(--ink-black); color:var(--paper-white);':'background:none; color:var(--ink-muted);'}">GRID</button>
+              <button onclick="setArchiveMode('film')" style="padding: 5px 10px; font-size: 11px; border: none; cursor: pointer; ${archiveMode==='film'?'background:var(--ink-black); color:var(--paper-white);':'background:none; color:var(--ink-muted);'}">FILME</button>
+              <button onclick="setArchiveMode('grid')" style="padding: 5px 10px; font-size: 11px; border: none; cursor: pointer; ${archiveMode==='grid'?'background:var(--ink-black); color:var(--paper-white);':'background:none; color:var(--ink-muted);'}">GRADE</button>
             </div>
           </div>
       `;
@@ -1306,9 +1326,9 @@
         html += `
           <div style="background: #141414; padding: 32px; box-shadow: var(--shadow-photo-lift);">
             <div style="display: flex; justify-content: space-between; font-family: 'JetBrains Mono'; font-size: 10px; color: #777; border-bottom: 1px solid #282828; padding-bottom: 12px; margin-bottom: 24px;">
-              <span>PROOF SHEET · 35MM ARCHIVE</span>
-              <span>DATE: 2026.09.05</span>
-              <span>FRAME PROOF NO. 402</span>
+              <span>FOLHA DE PROVA · ARQUIVO 35MM</span>
+              <span>DATA: 2026.09.05</span>
+              <span>PROVA FRAME Nº 402</span>
             </div>
             <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 16px;">
         `;
@@ -1353,7 +1373,7 @@
         html += `</div></div>`;
       } else if (archiveMode === 'timeline') {
         html += `<div style="display: flex; flex-direction: column; gap: 40px; padding-left: 24px; border-left: 1px solid var(--border-color);">`;
-        html += `<div><h3 class="font-serif" style="font-size: 24px;">September 2026</h3><div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 16px; margin-top: 16px;">`;
+        html += `<div><h3 class="font-serif" style="font-size: 24px;">Setembro de 2026</h3><div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 16px; margin-top: 16px;">`;
         PHOTOS.slice(0, 4).forEach(p => {
           html += `<div class="photo-card" onclick="openPhotoViewer('${p.id}')"><img src="${p.url}"></div>`;
         });
@@ -1386,19 +1406,19 @@
       container.innerHTML = `
         <div style="max-width: 1040px; margin: 0 auto; padding: 48px 24px;">
           <div style="text-align: center; margin-bottom: 56px;">
-            <p style="font-size: 11px; letter-spacing: 0.3em; color: var(--ink-muted); text-transform: uppercase;">DIGITAL → PHYSICAL</p>
-            <h2 class="font-serif" style="font-size: 38px; font-weight: 300; margin-top: 6px;">Printed</h2>
-            <p class="font-serif" style="font-style: italic; font-size: 14px; color: var(--ink-muted); margin-top: 4px;">Physical objects, bound photobooks, and tactile editions created from your photographs.</p>
+            <p style="font-size: 11px; letter-spacing: 0.3em; color: var(--ink-muted); text-transform: uppercase;">DIGITAL → FÍSICO</p>
+            <h2 class="font-serif" style="font-size: 38px; font-weight: 300; margin-top: 6px;">Impressos</h2>
+            <p class="font-serif" style="font-style: italic; font-size: 14px; color: var(--ink-muted); margin-top: 4px;">Objetos físicos, fotolivros encadernados e edições táteis criadas a partir das suas fotografias.</p>
           </div>
 
           <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 40px;">
             ${PRINTED_BOOKS.map(b => `
-              <div style="cursor: pointer;" onclick="showToast('Photobook edition: ${b.title}')">
+              <div style="cursor: pointer;" onclick="showToast('Edição do fotolivro: ${b.title}')">
                 <div style="aspect-ratio: 3/4; background: var(--paper-bone); padding: 16px; box-shadow: var(--shadow-photo); position: relative;">
                   <img src="${b.coverUrl}" alt="${b.title}" style="width: 100%; height: 100%; object-fit: cover;">
-                  <div style="position: absolute; bottom: 16px; left: 16px; right: 16px; background: rgba(251, 251, 249, 0.95); padding: 12px; backdrop-filter: blur(4px);">
-                    <h3 class="font-serif" style="font-size: 16px; font-weight: 500; color: #161616;">${b.title}</h3>
-                    <span class="font-mono" style="font-size: 10px; color: #73726E;">${b.pages} PAGES · ${b.year}</span>
+                  <div style="position: absolute; bottom: 16px; left: 16px; right: 16px; background: var(--overlay-bg); padding: 12px; backdrop-filter: blur(4px);">
+                    <h3 class="font-serif" style="font-size: 16px; font-weight: 500; color: var(--ink-black);">${b.title}</h3>
+                    <span class="font-mono" style="font-size: 10px; color: var(--ink-muted);">${b.pages} PÁGINAS · ${b.year}</span>
                   </div>
                 </div>
                 <div style="margin-top: 12px;">
@@ -1451,7 +1471,7 @@
           </div>
 
           <button onclick="toggleViewerExif()" style="background: none; border: none; font-family: 'JetBrains Mono'; font-size: 10px; letter-spacing: 0.15em; color: rgba(255,255,255,0.5); cursor: pointer; margin-top: 6px; text-transform: uppercase;">
-            ${isExifVisible ? '▼ HIDE EXIF' : '▲ SWIPE UP / EXIF'}
+            ${isExifVisible ? '▼ OCULTAR EXIF' : '▲ DESLIZE PARA CIMA / EXIF'}
           </button>
         </div>
 
@@ -1459,16 +1479,16 @@
         ${isExifVisible ? `
           <div style="position: absolute; bottom: 70px; background: rgba(20,20,20,0.92); border: 1px solid rgba(255,255,255,0.15); padding: 20px; max-width: 440px; width: 90%; backdrop-filter: blur(8px); z-index: 230;">
             <div style="display: flex; justify-content: space-between; font-family: 'JetBrains Mono'; font-size: 11px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 8px;">
-              <span>CAMERA & OPTICS</span>
+              <span>CÂMERA E ÓPTICA</span>
               <span style="color: #FFF;">${p.exif.camera}</span>
             </div>
             <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 14px; text-align: center; font-family: 'JetBrains Mono';">
               <div style="border: 1px solid rgba(255,255,255,0.1); padding: 6px;">
-                <span style="font-size: 9px; color: #888; display: block;">APERTURE</span>
+                <span style="font-size: 9px; color: #888; display: block;">ABERTURA</span>
                 <span style="font-size: 13px;">${p.exif.aperture}</span>
               </div>
               <div style="border: 1px solid rgba(255,255,255,0.1); padding: 6px;">
-                <span style="font-size: 9px; color: #888; display: block;">SHUTTER</span>
+                <span style="font-size: 9px; color: #888; display: block;">OBTURADOR</span>
                 <span style="font-size: 13px;">${p.exif.shutter}</span>
               </div>
               <div style="border: 1px solid rgba(255,255,255,0.1); padding: 6px;">
@@ -1476,7 +1496,7 @@
                 <span style="font-size: 13px;">${p.exif.iso}</span>
               </div>
               <div style="border: 1px solid rgba(255,255,255,0.1); padding: 6px;">
-                <span style="font-size: 9px; color: #888; display: block;">LENS</span>
+                <span style="font-size: 9px; color: #888; display: block;">LENTE</span>
                 <span style="font-size: 11px;">${p.exif.lens || '35mm'}</span>
               </div>
             </div>
@@ -1501,19 +1521,19 @@
       container.className = 'modal-backdrop';
       container.innerHTML = `
         <div class="modal-box" style="padding: 28px; max-width: 480px;">
-          <h3 class="font-serif" style="font-size: 22px; font-weight: 300;">Share as Image</h3>
-          <p style="font-size: 11px; color: var(--ink-muted); margin-top: 4px;">Render Board composition into a high-resolution PNG image.</p>
+          <h3 class="font-serif" style="font-size: 22px; font-weight: 300;">Compartilhar como Imagem</h3>
+          <p style="font-size: 11px; color: var(--ink-muted); margin-top: 4px;">Renderize a composição do painel em uma imagem PNG de alta resolução.</p>
           
           <div style="margin-top: 20px;">
-            <p style="font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink-muted); margin-bottom: 8px;">CHOOSE RATIO</p>
+            <p style="font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink-muted); margin-bottom: 8px;">ESCOLHER PROPORÇÃO</p>
             <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px;">
-              <button class="nav-btn" onclick="renderAndDownloadCanvas('square')" style="border: 1px solid var(--border-color); padding: 10px;">SQUARE (1:1)</button>
+              <button class="nav-btn" onclick="renderAndDownloadCanvas('square')" style="border: 1px solid var(--border-color); padding: 10px;">QUADRADO (1:1)</button>
               <button class="nav-btn" onclick="renderAndDownloadCanvas('story')" style="border: 1px solid var(--border-color); padding: 10px;">STORY (9:16)</button>
-              <button class="nav-btn" onclick="renderAndDownloadCanvas('landscape')" style="border: 1px solid var(--border-color); padding: 10px;">LANDSCAPE (16:9)</button>
+              <button class="nav-btn" onclick="renderAndDownloadCanvas('landscape')" style="border: 1px solid var(--border-color); padding: 10px;">PAISAGEM (16:9)</button>
             </div>
           </div>
 
-          <button onclick="closeModals()" style="width: 100%; margin-top: 24px; padding: 10px; background: none; border: 1px solid var(--border-color); cursor: pointer; font-size: 11px; text-transform: uppercase;">CANCEL</button>
+          <button onclick="closeModals()" style="width: 100%; margin-top: 24px; padding: 10px; background: none; border: 1px solid var(--border-color); cursor: pointer; font-size: 11px; text-transform: uppercase;">CANCELAR</button>
         </div>
       `;
     }
@@ -1533,7 +1553,7 @@
       ctx.font = '12px Inter, sans-serif';
       ctx.letterSpacing = '3px';
       ctx.textAlign = 'center';
-      ctx.fillText('FRAME · NOT A FEED. A FRAME.', canvas.width / 2, canvas.height - 32);
+      ctx.fillText('FRAME · NÃO É UM FEED. É UMA MOLDURA.', canvas.width / 2, canvas.height - 32);
 
       // Download
       const link = document.createElement('a');
@@ -1541,7 +1561,7 @@
       link.href = canvas.toDataURL('image/png');
       link.click();
       closeModals();
-      showToast('Board image generated & downloaded');
+      showToast('Imagem do painel gerada e baixada');
     }
 
     /* QUICK ADD DRAWER (Rule 21 & 22) */
@@ -1551,28 +1571,28 @@
       container.className = 'modal-backdrop';
       container.innerHTML = `
         <div class="modal-box" style="padding: 24px; max-width: 440px;">
-          <h3 class="font-serif" style="font-size: 20px; margin-bottom: 16px;">ADD</h3>
+          <h3 class="font-serif" style="font-size: 20px; margin-bottom: 16px;">ADICIONAR</h3>
           <div style="display: flex; flex-direction: column; gap: 8px;">
             <button onclick="simulateAddPhoto(); closeModals();" style="text-align: left; padding: 12px; background: var(--paper-surface); border: 1px solid var(--border-color); cursor: pointer;">
-              <p style="font-size: 12px; font-weight: 500;">ADD PHOTO FROM LIBRARY</p>
-              <p class="font-serif" style="font-style: italic; font-size: 11px; color: var(--ink-muted);">Import a photograph into your private home</p>
+              <p style="font-size: 12px; font-weight: 500;">ADICIONAR FOTO DA BIBLIOTECA</p>
+              <p class="font-serif" style="font-style: italic; font-size: 11px; color: var(--ink-muted);">Importe uma fotografia para o seu espaço privado</p>
             </button>
             <button onclick="switchTab('boards'); addNoteToBoard(); closeModals();" style="text-align: left; padding: 12px; background: var(--paper-surface); border: 1px solid var(--border-color); cursor: pointer;">
-              <p style="font-size: 12px; font-weight: 500;">WRITE NOTE</p>
-              <p class="font-serif" style="font-style: italic; font-size: 11px; color: var(--ink-muted);">A fleeting observation or fragment</p>
+              <p style="font-size: 12px; font-weight: 500;">ESCREVER NOTA</p>
+              <p class="font-serif" style="font-style: italic; font-size: 11px; color: var(--ink-muted);">Uma observação ou fragmento passageiro</p>
             </button>
-            <button onclick="showToast('Scan memory: Camera scanner ready for prints'); closeModals();" style="text-align: left; padding: 12px; background: var(--paper-surface); border: 1px solid var(--border-color); cursor: pointer;">
-              <p style="font-size: 12px; font-weight: 500;">SCAN MEMORY</p>
-              <p class="font-serif" style="font-style: italic; font-size: 11px; color: var(--ink-muted);">Polaroids, 35mm film negatives, ticket stubs, letters</p>
+            <button onclick="showToast('Escanear memória: scanner pronto para impressões'); closeModals();" style="text-align: left; padding: 12px; background: var(--paper-surface); border: 1px solid var(--border-color); cursor: pointer;">
+              <p style="font-size: 12px; font-weight: 500;">ESCANEAR MEMÓRIA</p>
+              <p class="font-serif" style="font-style: italic; font-size: 11px; color: var(--ink-muted);">Polaroides, negativos de filme 35mm, canhotos de ingresso, cartas</p>
             </button>
           </div>
-          <button onclick="closeModals()" style="width: 100%; margin-top: 16px; padding: 8px; background: none; border: none; cursor: pointer; font-size: 11px; color: var(--ink-muted);">CLOSE</button>
+          <button onclick="closeModals()" style="width: 100%; margin-top: 16px; padding: 8px; background: none; border: none; cursor: pointer; font-size: 11px; color: var(--ink-muted);">FECHAR</button>
         </div>
       `;
     }
 
     function simulateAddPhoto() {
-      showToast('Photograph added to private catalog');
+      showToast('Fotografia adicionada ao catálogo privado');
     }
 
     function closeModals() {
