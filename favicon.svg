@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="none">
+  <!-- Matte Charcoal Squircle Base -->
+  <rect width="512" height="512" rx="118" fill="#181818"/>
+  
+  <!-- Subtle Internal Matte Gradient -->
+  <rect x="12" y="12" width="488" height="488" rx="108" stroke="#262626" stroke-width="2" fill="none"/>
+  
+  <!-- Fine Warm-White Outer Frame -->
+  <rect x="64" y="64" width="384" height="384" rx="68" stroke="#ECEAE4" stroke-width="8" fill="none"/>
+  
+  <!-- Outer Aperture Ring -->
+  <circle cx="256" cy="256" r="128" stroke="#333333" stroke-width="6" fill="none"/>
+  
+  <!-- Mechanical Lens Markers -->
+  <line x1="256" y1="120" x2="256" y2="134" stroke="#444444" stroke-width="4" stroke-linecap="round"/>
+  <line x1="256" y1="378" x2="256" y2="392" stroke="#444444" stroke-width="4" stroke-linecap="round"/>
+  <line x1="120" y1="256" x2="134" y2="256" stroke="#444444" stroke-width="4" stroke-linecap="round"/>
+  <line x1="378" y1="256" x2="392" y2="256" stroke="#444444" stroke-width="4" stroke-linecap="round"/>
+  
+  <!-- Middle Lens Ring -->
+  <circle cx="256" cy="256" r="100" stroke="#222222" stroke-width="8" fill="none"/>
+  <circle cx="256" cy="256" r="88" stroke="#2D2D2D" stroke-width="2" fill="none"/>
+  
+  <!-- Deep Inner Glass Element -->
+  <circle cx="256" cy="256" r="72" fill="#121212" stroke="#3A3A3A" stroke-width="3"/>
+  <circle cx="256" cy="256" r="52" fill="#0D0D0D"/>
+  
+  <!-- Classic Red Optical Accent Dot -->
+  <circle cx="334" cy="334" r="16" fill="#C53929"/>
+  <circle cx="331" cy="331" r="5" fill="#E86C5D" opacity="0.6"/>
+</svg>

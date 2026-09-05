@@ -1,0 +1,22 @@
+{
+  "name": "FRAME — Not a feed. A frame.",
+  "short_name": "FRAME",
+  "description": "A private home for your photographs. Photography, without the performance.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#FBFBF9",
+  "theme_color": "#161616",
+  "icons": [
+    {
+      "src": "./icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "./favicon.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml"
+    }
+  ]
+}
